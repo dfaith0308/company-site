@@ -633,12 +633,69 @@
 
     /* ── Footer ── */
     .footer {
-      background: var(--charcoal);
-      color: rgba(255, 255, 255, 0.55);
-      text-align: center;
-      padding: 20px;
+      background: var(--bg);
+      color: #c0bdb5;
       font-size: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .footer-toggle {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1.8;
+      color: #c0bdb5;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .footer-toggle:hover {
+      color: var(--muted);
+    }
+
+    .footer-details-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+
+    .footer-details-wrap.is-open {
+      grid-template-rows: 1fr;
+    }
+
+    .footer-details {
+      overflow: hidden;
+    }
+
+    .footer-details-inner {
+      padding-top: 12px;
+    }
+
+    .footer-details p {
+      margin: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .footer-details-wrap {
+        transition: none;
+      }
     }
   </style>
   <script type="application/ld+json">
@@ -895,9 +952,38 @@
 
     <!-- 13. Footer -->
     <footer class="footer">
-      식식이 · KOJOMO LAB · siksiki.com
+      <div class="footer-row">
+        <span class="footer-brand">식식이 · KOJOMO LAB · © 2025</span>
+        <button type="button" class="footer-toggle" aria-expanded="false" aria-controls="footer-details">사업자 정보 ∨</button>
+      </div>
+      <div class="footer-details-wrap" id="footer-details">
+        <div class="footer-details">
+          <div class="footer-details-inner">
+            <p>상호명: 디닷페이스</p>
+            <p>사업자등록번호: 728-02-02513</p>
+            <p>통신판매업신고번호: 제2026-인천부평-0405호</p>
+            <p>대표: 김정무</p>
+            <p>주소: 인천광역시 부평구 장제로155번길 24</p>
+            <p>이메일: siksiki.center@gmail.com</p>
+            <p>고객센터: 032-215-3207 | 010-4945-6662</p>
+          </div>
+        </div>
+      </div>
     </footer>
 
   </div>
+  <script>
+    (function () {
+      var btn = document.querySelector('.footer-toggle');
+      var panel = document.getElementById('footer-details');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function () {
+        var open = panel.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.textContent = open ? '사업자 정보 ∧' : '사업자 정보 ∨';
+      });
+    })();
+  </script>
 </body>
 </html>

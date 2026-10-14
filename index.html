@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="식자재 담당 직원을 월 29,000원에. 매출은 멋입니다. 수익은 생존입니다. 식재료 원가, 식식이가 잡아드립니다." />
-  <title>식식이 — 식당 운영 관리 플랫폼</title>
+  <meta name="description" content="지금 쓰시는 식자재, 더 싸게 구해드립니다. 전표 사진 한 장이면 식식이가 가격을 살펴봅니다. 오픈 이벤트 기간 무료(정가 월 29,000원)." />
+  <title>식식이 — 식당 식자재, 더 싸게 구해드립니다</title>
   <link rel="canonical" href="https://siksiki.com" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="식식이 — 식자재 담당 직원을 월 29,000원에" />
-  <meta property="og:description" content="식자재 담당 직원을 월 29,000원에. 매출은 멋입니다. 수익은 생존입니다. 식재료 원가, 식식이가 잡아드립니다." />
+  <meta property="og:title" content="식식이 — 식당 식자재, 더 싸게 구해드립니다" />
+  <meta property="og:description" content="지금 쓰시는 식자재, 더 싸게 구해드립니다. 전표 사진 한 장이면 식식이가 가격을 살펴봅니다. 오픈 이벤트 기간 무료(정가 월 29,000원)." />
   <meta property="og:url" content="https://siksiki.com" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://siksiki.com/og-image.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="식식이 — 식자재 담당 직원을 월 29,000원에" />
-  <meta name="twitter:description" content="식자재 담당 직원을 월 29,000원에. 매출은 멋입니다. 수익은 생존입니다." />
+  <meta name="twitter:title" content="식식이 — 식당 식자재, 더 싸게 구해드립니다" />
+  <meta name="twitter:description" content="지금 쓰시는 식자재, 더 싸게 구해드립니다. 오픈 이벤트 기간 무료(정가 월 29,000원)." />
   <meta name="twitter:image" content="https://siksiki.com/og-image.png" />
 
   <!-- Favicon -->
@@ -487,6 +487,12 @@
       font-weight: 700;
     }
 
+    .price-card-top .plan-list-price {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 4px;
+    }
+
     .price-roi {
       background: var(--green-soft);
       padding: 14px 16px;
@@ -697,6 +703,112 @@
       text-decoration: none;
     }
 
+    /* ── 카카오톡 버튼 ── */
+    .btn-kakao {
+      background: #fee500;
+      color: #191600;
+    }
+
+    /* ── 회원가 예시 ── */
+    .deal-box {
+      background: var(--white);
+      color: var(--charcoal);
+      border-radius: 8px;
+      padding: 18px 16px;
+      margin-bottom: 16px;
+    }
+
+    .deal-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .deal-title span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-left: 6px;
+    }
+
+    .deal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .deal-name {
+      min-width: 0;
+    }
+
+    .deal-price {
+      flex-shrink: 0;
+      font-weight: 700;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .deal-price s {
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .deal-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .solution-honest {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      background: var(--bg);
+    }
+
+    .faq .section-label {
+      color: var(--muted);
+    }
+
+    .faq details {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .faq details + details {
+      margin-top: 8px;
+    }
+
+    .faq summary {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .faq details p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #555555;
+      margin-top: 10px;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .footer-details-wrap {
         transition: none;
@@ -708,14 +820,16 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "식식이",
-    "description": "식자재 담당 직원을 월 29,000원에",
+    "description": "지금 쓰시는 식자재, 더 싸게 구해드립니다. 오픈 이벤트 기간 무료(정가 월 29,000원)",
     "url": "https://siksiki.com",
     "offers": {
       "@type": "Offer",
-      "price": "29000",
+      "price": "0",
       "priceCurrency": "KRW",
+      "description": "오픈 이벤트 기간 무료 (정가 월 29,000원)",
       "priceSpecification": {
         "@type": "UnitPriceSpecification",
+        "priceType": "https://schema.org/ListPrice",
         "price": "29000",
         "priceCurrency": "KRW",
         "billingDuration": "P1M"
@@ -737,122 +851,72 @@
         </svg>
         식식이
       </a>
-      <a href="https://restaurant.siksiki.com" class="btn btn-sm btn-orange">시작하기</a>
+      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-sm btn-orange">시작하기</a>
     </header>
 
     <!-- 2. Hero -->
     <section class="hero">
-      <p class="section-label">식당 운영 관리 플랫폼</p>
+      <p class="section-label">식당 사장님 전용 · 식자재</p>
       <h1 class="section-head">
-        매출은 멋입니다.<br />
-        <span class="accent">수익은 생존</span>입니다.
+        지금 쓰시는 식자재,<br />
+        <span class="accent">더 싸게</span> 구해드립니다.
       </h1>
-      <p class="section-sub">식당 운영, 가장 쉬운 것부터 시작합니다. 식자재입니다.</p>
+      <p class="section-sub">전표 사진 한 장이면 됩니다. 식식이가 가격을 살펴보고, 더 싸게 살 수 있는 길을 찾아드립니다.</p>
 
       <div class="steps">
         <div class="step-card">
           <span class="step-num">01</span>
-          <span class="step-text">전표 사진을 카카오톡으로 보내주세요</span>
+          <span class="step-text">지금 받는 전표(거래명세서) 사진을 카카오톡으로 보내주세요</span>
         </div>
         <div class="step-card">
           <span class="step-num">02</span>
-          <span class="step-text">식식이가 식자재를 직접 세팅합니다</span>
+          <span class="step-text">식식이가 품목별 가격을 직접 살펴봅니다</span>
         </div>
         <div class="step-card">
           <span class="step-num">03</span>
-          <span class="step-text">원가 분석 리포트를 카톡으로 받으세요</span>
+          <span class="step-text">더 싸게 살 수 있는 품목과 방법을 알려드립니다</span>
         </div>
       </div>
 
-      <p class="hero-note">메뉴판 입력도, 식자재 등록도 사장님이 하지 않아도 됩니다.</p>
+      <p class="hero-note">식자재 등록도, 가격 협상도 식식이가 대신 합니다. 거래처를 바꾸라고 하지 않습니다. 싸게 살 수 있는 품목만 골라 바꾸시면 됩니다.</p>
 
-      <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">사장님 — 지금 바로 시작하기 →</a>
-      <a href="https://app.siksiki.com" class="btn btn-ghost btn-block">공급자 — 입점 문의하기</a>
+      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
+      <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 전표 보내기</a>
     </section>
 
     <!-- 3. Empathy -->
     <section class="empathy">
       <p class="section-label">사장님, 이런 적 있으신가요</p>
-      <h2 class="section-head">매달 열심히 하는데 왜 남는 게 없을까요.</h2>
-      <p class="section-sub">매출이 올라도 통장에 돈이 안 남습니다. 이유를 모릅니다.</p>
+      <h2 class="section-head">식자재, 제값에 사고 있는 건지 모르겠다.</h2>
+      <p class="section-sub">매달 가장 크게 나가는 돈인데, 비교해 볼 시간도 물어볼 곳도 없습니다.</p>
 
       <div class="pain-list">
         <div class="pain-card">식재료 값은 오르는데 메뉴 가격은 못 올리고 있다</div>
-        <div class="pain-card">어디서 사는 게 싼지 비교할 시간도 없다</div>
-        <div class="pain-card">오늘 된장찌개 한 그릇 얼마 남는지 모른다</div>
-        <div class="pain-card">발주는 카카오톡 전화로 여기저기 따로따로</div>
+        <div class="pain-card">어디서 사는 게 싼지 비교할 시간이 없다</div>
+        <div class="pain-card">오래 거래한 곳이라 가격 얘기를 꺼내기 미안하다</div>
+        <div class="pain-card">옆 가게는 같은 걸 얼마에 사는지 모른다</div>
       </div>
 
       <div class="cta-band">
-        <p>이미 공감되셨나요? 더 읽지 않으셔도 됩니다.</p>
-        <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">지금 바로 시작하기 →</a>
+        <p>전표 한 장만 보내보세요. 살펴보는 데 비용은 없습니다.</p>
+        <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 전표 보내기</a>
       </div>
     </section>
 
-    <!-- 4. Secret 01 -->
-    <section class="secret-dark">
-      <p class="secret-number">아무도 말 안 해주는 것 01</p>
-      <h2 class="section-head">인건비를 줄이면 사장님이 더 힘들어집니다.</h2>
-      <p class="body-text">직원을 줄이면 그 일은 결국 사장님 몫입니다. 더 오래 일하고 더 지치고 정작 수익은 그대로입니다.</p>
-      <hr class="divider" />
-      <p class="emphasis-text">수익을 늘리는 가장 쉽고 빠른 방법은 원가입니다. 그중 지금 당장 줄일 수 있는 건 식재료 원가입니다.</p>
-    </section>
-
-    <!-- 5. Secret 02 -->
-    <section class="secret-light">
-      <p class="secret-number">아무도 말 안 해주는 것 02</p>
-      <h2 class="section-head">오래 거래할수록 왜 내가 을이 됐을까요.</h2>
-      <div class="img-placeholder" role="img" aria-label="이미지 준비 중"></div>
-      <p class="body-text">가격을 따지기 미안하고 바꾸기도 불편합니다. 납품업체가 나쁜 게 아닙니다. 그쪽도 여러 유통 단계를 거쳐 어쩔 수 없는 가격인 경우가 많습니다.</p>
-      <p class="emphasis-text">건강한 거래 관계란 가격을 말할 수 있는 관계입니다.</p>
-      <div class="cta-band">
-        <p style="color: var(--white);">식식이가 대신 협상해드립니다.</p>
-        <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">식식이가 협상해드립니다 →</a>
-      </div>
-    </section>
-
-    <!-- 6. Secret 03 -->
-    <section class="secret-dark">
-      <p class="secret-number">아무도 말 안 해주는 것 03</p>
-      <h2 class="section-head">옆 가게보다 비싸게 사고 있을 수 있습니다.</h2>
-      <p class="body-text">같은 된장을 어떤 사장님은 싸게 어떤 사장님은 비싸게 삽니다. <span class="emphasis">모르면 계속 비싸게 삽니다.</span></p>
-      <hr class="divider" />
-      <p class="emphasis-text">식식이를 쓰는 식당이 늘수록 어떤 식자재가 검증됐는지 자연스럽게 보이기 시작합니다.</p>
-    </section>
-
-    <!-- 7. Secret 04 -->
-    <section class="secret-dark no-top-pad">
-      <hr class="divider" style="margin-top: 0;" />
-      <p class="secret-number">아무도 말 안 해주는 것 04</p>
-      <h2 class="section-head">무조건 싼 식자재, 조심해야 합니다.</h2>
-      <p class="body-text">식품 당국이 온라인으로 직접 주문해서 불시 점검합니다. 걸리면 브랜드 바꾸고 사업자 바꿔서 다시 나옵니다.</p>
-      <hr class="divider" />
-      <p class="emphasis-text">식식이는 무조건 싼 걸 찾지 않습니다. 안정적으로 검증된 식자재를 찾습니다. 사장님 식당이 오래 가야 하니까요.</p>
-    </section>
-
-    <!-- 8. Solution -->
+    <!-- 4. Solution — 싸게 해드리는 세 가지 길 -->
     <section class="solution">
-      <p class="section-label">식식이가 하는 일</p>
-      <h2 class="section-head">식당 운영 관리, 식자재부터 시작합니다.</h2>
-      <p class="section-sub">식자재가 잡히면 원가가 보입니다. 원가가 보이면 수익이 보입니다.</p>
+      <p class="section-label">식식이가 싸게 해드리는 방법</p>
+      <h2 class="section-head">세 가지 길로 식자재 값을 낮춥니다.</h2>
+      <p class="section-sub">있는 건 회원가로, 없는 건 찾아서, 납품 받는 건 견적으로.</p>
 
       <div class="feature-list">
         <div class="feature-card">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M4 7h16l-1.5 9h-13L4 7z"/><path d="M9 20h.01M16 20h.01M4 7L3 4H1"/></svg>
           </div>
           <div>
-            <p class="feature-title">전표 사진 한 장이면 됩니다</p>
-            <p class="feature-desc">식자재 등록 메뉴판 입력 모두 식식이가 직접 합니다</p>
-          </div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 19h16M6 16l3-8 4 5 3-4 2 7"/></svg>
-          </div>
-          <div>
-            <p class="feature-title">원가가 자동으로 잡힙니다</p>
-            <p class="feature-desc">메뉴별 원가 수익성이 자동 계산됩니다</p>
+            <p class="feature-title">자주 쓰는 식자재를 회원가로</p>
+            <p class="feature-desc">정가보다 낮은 회원가로 팝니다. 장바구니에서 구독회원 추가 할인이 한 번 더 붙습니다.</p>
           </div>
         </div>
         <div class="feature-card">
@@ -860,56 +924,96 @@
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>
           </div>
           <div>
-            <p class="feature-title">없으면 직접 찾아드립니다</p>
-            <p class="feature-desc">발주요청 하시면 검증된 공급업체를 연결합니다</p>
+            <p class="feature-title">식식이에 없으면 찾아드립니다</p>
+            <p class="feature-desc">쓰시는 식자재를 알려주시면 식식이가 대신 알아보고 가격을 협상합니다. 원재료가 같은 다른 제품도 함께 알려드립니다.</p>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg>
           </div>
           <div>
-            <p class="feature-title">발주가 한 곳에서 됩니다</p>
-            <p class="feature-desc">모든 거래처 발주가 식식이 하나로 정리됩니다</p>
+            <p class="feature-title">납품 받는 품목은 발주요청으로</p>
+            <p class="feature-desc">원하는 품목과 조건을 올리면 식식이가 고른 유통업체가 견적을 드립니다. 지역별로 순서대로 엽니다.</p>
           </div>
         </div>
       </div>
 
-      <div class="cta-band cta-band-light">
-        <p>이게 월 29,000원입니다.</p>
-        <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">전담 직원 두기 →</a>
+      <div class="deal-box">
+        <p class="deal-title">지금 회원가 <span>2026년 10월 14일 기준</span></p>
+        <div class="deal-row">
+          <span class="deal-name">해내음 들기름 1.8L</span>
+          <span class="deal-price"><s>35,000원</s> 29,000원</span>
+        </div>
+        <div class="deal-row">
+          <span class="deal-name">해내음 만능 비빔 양념장 2kg</span>
+          <span class="deal-price"><s>15,000원</s> 12,500원</span>
+        </div>
+        <div class="deal-row">
+          <span class="deal-name">해내음 메주시골된장 14kg</span>
+          <span class="deal-price"><s>62,000원</s> 58,500원</span>
+        </div>
+        <p class="deal-note">여기에 장바구니에서 구독회원 추가 할인 10%가 더 붙습니다. 가격은 바뀔 수 있습니다.</p>
+      </div>
+
+      <p class="solution-honest">더 싸게 구할 수 없는 품목은 "지금 잘 사고 계십니다"라고 말씀드립니다.</p>
+
+      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
+      <a href="https://restaurant.siksiki.com/browse" class="btn btn-ghost btn-block">지금 살 수 있는 상품 보기</a>
+    </section>
+
+    <!-- 5. 왜 가격 얘기를 못 꺼내나 -->
+    <section class="secret-light">
+      <p class="secret-number">아무도 말 안 해주는 것 01</p>
+      <h2 class="section-head">오래 거래할수록 왜 내가 을이 됐을까요.</h2>
+      <p class="body-text">가격을 따지기 미안하고 바꾸기도 불편합니다. 납품업체가 나쁜 게 아닙니다. 그쪽도 여러 유통 단계를 거쳐 어쩔 수 없는 가격인 경우가 많습니다.</p>
+      <p class="emphasis-text">건강한 거래 관계란 가격을 말할 수 있는 관계입니다. 가격 협상은 식식이가 대신 해드립니다.</p>
+    </section>
+
+    <!-- 6. 옆 가게 가격 -->
+    <section class="secret-dark">
+      <p class="secret-number">아무도 말 안 해주는 것 02</p>
+      <h2 class="section-head">옆 가게보다 비싸게 사고 있을 수 있습니다.</h2>
+      <p class="body-text">같은 된장을 어떤 사장님은 싸게, 어떤 사장님은 비싸게 삽니다. <span class="emphasis">모르면 계속 비싸게 삽니다.</span></p>
+      <hr class="divider" />
+      <p class="emphasis-text">식식이는 무조건 싼 것만 찾지 않습니다. 오래 믿고 쓸 수 있는 식자재를 찾습니다. 사장님 식당이 오래 가야 하니까요.</p>
+    </section>
+
+    <!-- 7. 싸게 산 다음 -->
+    <section class="empathy">
+      <p class="section-label">싸게 산 다음도 챙깁니다</p>
+      <h2 class="section-head">아낀 돈이 어디로 가는지도 보입니다.</h2>
+      <p class="section-sub">휴대폰 하나로 됩니다.</p>
+
+      <div class="pain-list" style="margin-bottom: 0;">
+        <div class="pain-card">메뉴 한 그릇에 얼마 남는지 계산해 드립니다</div>
+        <div class="pain-card">거래처별로 줄 돈과 이번 주 나갈 돈을 정리해 드립니다</div>
+        <div class="pain-card">여러 거래처 발주를 한 곳에서 합니다</div>
       </div>
     </section>
 
-    <!-- 9. Pricing -->
+    <!-- 8. Pricing -->
     <section class="pricing">
-      <p class="section-label">식식이는 플랫폼이 아닙니다</p>
-      <h2 class="section-head">식자재 담당 직원을 월 29,000원에 두는 겁니다.</h2>
-      <p class="section-sub">구독료는 비용이 아닙니다. 사장님보다 식자재를 더 잘 아는 전담 직원 월급입니다.</p>
+      <p class="section-label">가격</p>
+      <h2 class="section-head">지금은 무료입니다.</h2>
+      <p class="section-sub">오픈 이벤트 기간에는 구독료를 받지 않습니다. 카드 등록도 없습니다. 구독회원 혜택은 그대로 드립니다.</p>
 
       <div class="price-card">
         <div class="price-card-top">
           <p class="plan-name">식당 사장님</p>
-          <p class="plan-price">29,000원/월</p>
+          <p class="plan-price">오픈 이벤트 기간 무료</p>
+          <p class="plan-list-price">정가 월 29,000원</p>
         </div>
-        <div class="price-roi">월 식재료비 300만원 기준 1%만 절약해도 월 3만원 — 구독료가 스스로 뽑힙니다.</div>
+        <div class="price-roi">월 식재료비 300만원에서 1%만 아껴도 월 3만원입니다.</div>
         <div class="price-card-bottom">
           <ul class="check-list">
             <li>
               <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              식자재 소싱 및 공급업체 연결
+              식자재 회원가 구매
             </li>
             <li>
               <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              메뉴별 원가 자동 계산
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              발주 통합 관리
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              거래처 가격 협상 대행
+              장바구니 구독회원 추가 할인
             </li>
             <li>
               <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
@@ -917,42 +1021,71 @@
             </li>
             <li>
               <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              문제 발생 시 식식이가 책임
+              쓰시던 식자재 가격 점검 · 가격 협상 대행
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
+              없는 식자재 찾아드림
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
+              유통업체 발주요청
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
+              메뉴별 원가 계산 · 줄 돈 관리
             </li>
           </ul>
-          <p class="price-note">언제든 해지 가능 · 위약금 없음</p>
+          <p class="price-note">카드 등록 없이 시작 · 이벤트 종료 전 미리 안내드립니다</p>
         </div>
       </div>
 
       <div class="worry-box">
-        <p>아직 고민되시나요? 딱 한 달만 써보세요.</p>
-        <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">한 달 써보기 →</a>
+        <p>아직 고민되시나요? 지금은 무료입니다. 먼저 써보세요.</p>
+        <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
       </div>
     </section>
 
-    <!-- 10. Supplier -->
+    <!-- 9. FAQ -->
+    <section class="faq">
+      <p class="section-label">자주 묻는 질문</p>
+      <details>
+        <summary>무료는 언제까지인가요?</summary>
+        <p>오픈 이벤트 기간 동안입니다. 끝나기 전에 미리 안내드립니다. 카드를 등록받지 않기 때문에 자동으로 결제되는 일은 없습니다.</p>
+      </details>
+      <details>
+        <summary>지금 거래처를 계속 써도 되나요?</summary>
+        <p>네. 거래처를 바꾸라고 하지 않습니다. 더 싸게 살 수 있는 품목만 골라서 바꾸시면 됩니다.</p>
+      </details>
+      <details>
+        <summary>식식이에 없는 식자재는 어떻게 하나요?</summary>
+        <p>쓰시는 품목을 알려주시면 찾아봅니다. 더 싸게 구할 수 없으면 그렇다고 말씀드립니다.</p>
+      </details>
+      <details>
+        <summary>배송비는 얼마인가요?</summary>
+        <p>주문 한 번에 3,000원입니다. 무료배송 상품도 있고, 여러 개 담으면 무료가 되는 상품도 있습니다.</p>
+      </details>
+      <details>
+        <summary>컴퓨터가 없어도 되나요?</summary>
+        <p>네. 휴대폰으로 가입부터 주문까지 할 수 있습니다.</p>
+      </details>
+    </section>
+
+    <!-- 10. Final CTA -->
+    <section class="final-cta">
+      <h2>사장님이 조금 더 편하셨으면 합니다.</h2>
+      <p>현장을 직접 찾아다니며 만들었습니다. 전표 한 장부터 보내보세요.</p>
+      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
+      <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 물어보기</a>
+      <a href="tel:032-215-3207" class="btn btn-ghost btn-block">전화 문의 032-215-3207</a>
+      <p class="fine-print">오픈 이벤트 기간 무료 · 카드 등록 없이 시작</p>
+    </section>
+
+    <!-- 11. Supplier -->
     <section class="supplier">
       <h2>식자재 공급업체이신가요?</h2>
       <p>식식이와 함께 검증된 식당 거래처를 만나보세요.</p>
-      <p class="price-info">큐레이션 등록비 990,000원 · 공급자OS 월 99,000원</p>
-      <a href="https://app.siksiki.com" class="btn btn-orange btn-block">공급자 입점 문의하기 →</a>
-    </section>
-
-    <!-- 11. Final CTA -->
-    <section class="final-cta">
-      <h2>사장님이 조금 더 편하셨으면 합니다.</h2>
-      <p>현장을 직접 찾아다니며 만들었습니다. 한 번만 써보시면 압니다.</p>
-      <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">지금 바로 시작하기 →</a>
-      <a href="https://app.siksiki.com" class="btn btn-ghost btn-block">공급자 입점 문의</a>
-      <p class="fine-print">언제든 해지 가능 · 위약금 없음</p>
-    </section>
-
-    <!-- 12. Exit prevention -->
-    <section class="exit">
-      <div class="thin-line"></div>
-      <h2>혹시 아직 결정을 못 하셨나요.</h2>
-      <p>잡을 순 없습니다. 그럼에도 사장님을 응원합니다. 지금 이 페이지를 나가셔도 식재료 원가는 내일도 그대로입니다. 나아지고 싶으시다면 식식이가 정답이 될 수 있습니다. 후회가 없으시길 바랍니다.</p>
-      <a href="https://restaurant.siksiki.com" class="btn btn-orange btn-block">후회 없는 선택 하기 →</a>
+      <a href="tel:032-215-3207" class="btn btn-ghost btn-block" style="margin-top: 16px;">입점 문의 전화 032-215-3207</a>
     </section>
 
     <!-- 13. Footer -->

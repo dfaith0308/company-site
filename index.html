@@ -25,794 +25,409 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" />
   <style>
+    /*
+      디자인 기준 (2026-10-14 개편)
+      - 주제: 전표(거래명세서) 위에 빨간 펜으로 가격을 고쳐 적는 장면.
+      - 종이색 바탕 + 먹색 글씨 + 가는 줄. 상자·그림자·아이콘으로 칸을 나누지 않는다.
+      - 색은 셋만 쓴다: 먹색(글), 초록(식식이·누르는 곳), 빨간 펜(깎인 값). 노랑은 카카오톡 버튼에만.
+      - 손글씨(Nanum Pen Script)는 "펜으로 적은 메모"에만 쓴다.
+    */
     :root {
+      --paper: #f4f0e6;
+      --sheet: #fffdf8;
+      --ink: #1b1815;
+      --sub: #6a6359;
+      --rule: #1b1815;
+      --hair: #d9d2c3;
       --green: #1f5d3a;
-      --green-dark: #17462c;
-      --green-soft: #e4efe9;
-      --orange: #e8701c;
-      --bg: #f7f6f2;
-      --white: #ffffff;
-      --charcoal: #2b2b2b;
-      --muted: #888888;
-      --border: #e2e1dc;
-      --accent: #a8d4b8;
-      --max: 480px;
+      --pen: #d4371c;
+      --kakao: #fee500;
+      --pad: 22px;
     }
 
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--charcoal);
+      background: var(--paper);
+      color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      padding-bottom: 76px; /* 아래 고정 버튼 자리 */
     }
 
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      background: var(--white);
-      min-height: 100vh;
-    }
+    a { color: inherit; text-decoration: none; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--pad); }
 
-    /* ── Header ── */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .pen { font-family: 'Nanum Pen Script', 'Pretendard', cursive; color: var(--pen); font-weight: 400; }
+
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+    /* ── 누르는 곳 ── */
+    .btn {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      justify-content: center;
+      width: 100%;
+      min-height: 54px;
+      padding: 0 20px;
+      font: inherit;
       font-size: 17px;
       font-weight: 700;
-      color: var(--green);
-    }
-
-    .logo svg {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 10px 18px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
+      letter-spacing: -0.01em;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
       cursor: pointer;
-      transition: opacity 0.15s;
-      text-align: center;
-      line-height: 1.3;
     }
 
-    .btn:hover {
-      opacity: 0.88;
-    }
+    .btn-go { background: var(--green); border-color: var(--green); color: #fff; }
+    .btn-kakao { background: var(--kakao); border-color: var(--kakao); color: #191600; }
+    .btn-line { background: transparent; color: var(--ink); }
+    .btn + .btn { margin-top: 10px; }
 
-    .btn-sm {
-      padding: 8px 14px;
-      font-size: 13px;
-    }
-
-    .btn-orange {
-      background: var(--orange);
-      color: var(--white);
-    }
-
-    .btn-white {
-      background: var(--white);
-      color: var(--green);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.45);
-    }
-
-    .btn-ghost-dark {
-      background: transparent;
-      color: var(--charcoal);
-      border: 1px solid var(--border);
-    }
-
-    .btn-block {
-      width: 100%;
-    }
-
-    .btn + .btn {
-      margin-top: 10px;
-    }
-
-    /* ── Sections ── */
-    section {
-      padding: 40px 20px;
-    }
-
-    .section-label {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      margin-bottom: 12px;
-    }
-
-    .section-head {
-      font-size: 22px;
+    .text-link {
       font-weight: 700;
-      line-height: 1.4;
-      margin-bottom: 12px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 1px;
     }
 
-    .section-sub {
-      font-size: 15px;
-      line-height: 1.65;
-      margin-bottom: 24px;
+    /* ── 머리 ── */
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 2px solid var(--rule);
     }
 
-    .secret-number {
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 14px;
-      letter-spacing: 0.02em;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      margin: 24px 0;
-    }
-
-    .divider-dark {
-      border-top-color: var(--border);
-    }
-
-    .emphasis {
-      font-weight: 600;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      background: var(--green);
-      color: var(--white);
-      padding: 36px 20px 40px;
-    }
-
-    .hero .section-label {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .hero .section-head {
-      font-size: 26px;
-      margin-bottom: 14px;
-    }
-
-    .hero .section-head .accent {
-      color: var(--accent);
-    }
-
-    .hero .section-sub {
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 28px;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .step-card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 14px 16px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .step-num {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      flex-shrink: 0;
-      min-width: 22px;
-    }
-
-    .step-text {
-      font-size: 14px;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .hero-note {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 24px;
-      line-height: 1.55;
-    }
-
-    /* ── Empathy ── */
-    .empathy {
-      background: var(--bg);
-    }
-
-    .empathy .section-label {
-      color: var(--muted);
-    }
-
-    .empathy .section-sub {
-      color: var(--muted);
-    }
-
-    .pain-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-
-    .pain-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      font-size: 14px;
-      line-height: 1.55;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .pain-card::before {
-      content: '·';
-      color: var(--green);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .cta-band {
-      background: var(--green);
-      color: var(--white);
-      border-radius: 8px;
-      padding: 24px 20px;
-      text-align: center;
-    }
-
-    .cta-band p {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .cta-band-light {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    /* ── Secrets (dark) ── */
-    .secret-dark {
-      background: var(--charcoal);
-      color: var(--white);
-    }
-
-    .secret-dark .secret-number {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .secret-dark .body-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    .secret-dark .emphasis-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .secret-dark.no-top-pad {
-      padding-top: 0;
-    }
-
-    /* ── Secret 02 (light) ── */
-    .secret-light {
-      background: var(--white);
-    }
-
-    .secret-light .secret-number {
-      color: var(--muted);
-    }
-
-    .secret-light .body-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--charcoal);
-      margin-bottom: 16px;
-    }
-
-    .secret-light .emphasis-text {
-      font-size: 15px;
-      line-height: 1.7;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 24px;
-    }
-
-    .img-placeholder {
-      width: 100%;
-      height: 160px;
-      background: #d4d4d4;
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
-
-    /* ── Solution ── */
-    .solution {
-      background: var(--green);
-      color: var(--white);
-    }
-
-    .solution .section-label {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .solution .section-sub {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .feature-card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 16px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .feature-icon {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
+    .top .wrap {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      height: 56px;
     }
 
-    .feature-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .brand { font-size: 21px; font-weight: 800; letter-spacing: -0.04em; color: var(--green); }
+    .brand small { font-size: 13px; font-weight: 600; color: var(--sub); letter-spacing: -0.01em; margin-left: 8px; }
+    .top-link { font-size: 15px; font-weight: 700; border-bottom: 2px solid var(--ink); }
+
+    /* ── 첫 화면 ── */
+    .hero { padding: 36px 0 56px; }
+
+    .hero h1 {
+      font-size: 39px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.045em;
+      margin-bottom: 18px;
     }
 
-    .feature-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 4px;
+    .hero h1 em {
+      font-style: normal;
+      color: var(--pen);
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 22 2, 40 11, 62 6 S 100 3, 118 7' fill='none' stroke='%23d4371c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 10px;
+      padding-bottom: 8px;
     }
 
-    .feature-desc {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.5;
+    .hero-lead { font-size: 18px; line-height: 1.65; color: var(--ink); margin-bottom: 26px; }
+    .hero-fine { font-size: 14px; color: var(--sub); margin-top: 14px; }
+
+    /* 전표 */
+    .slip-area { margin-top: 44px; padding: 0 4px; }
+
+    .slip {
+      position: relative;
+      background: var(--sheet);
+      padding: 22px 18px 20px;
+      transform: rotate(-1.4deg);
+      filter: drop-shadow(0 10px 18px rgba(27, 24, 21, 0.16));
     }
 
-    /* ── Pricing ── */
-    .pricing {
-      background: var(--white);
+    .slip::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -9px;
+      height: 10px;
+      background:
+        linear-gradient(135deg, var(--sheet) 7px, transparent 0) 0 0 / 14px 10px repeat-x,
+        linear-gradient(-135deg, var(--sheet) 7px, transparent 0) 0 0 / 14px 10px repeat-x;
     }
 
-    .pricing .section-label {
-      color: var(--muted);
-    }
-
-    .pricing .section-sub {
-      color: var(--muted);
-    }
-
-    .price-card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .price-card-top {
-      background: var(--green);
-      color: var(--white);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .price-card-top .plan-name {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.75);
-      margin-bottom: 4px;
-    }
-
-    .price-card-top .plan-price {
-      font-size: 28px;
-      font-weight: 700;
-    }
-
-    .price-card-top .plan-list-price {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.75);
-      margin-top: 4px;
-    }
-
-    .price-roi {
-      background: var(--green-soft);
-      padding: 14px 16px;
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--charcoal);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .price-card-bottom {
-      padding: 20px;
-    }
-
-    .check-list {
-      list-style: none;
+    .slip-head {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 16px;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 10px;
     }
 
-    .check-list li {
-      font-size: 14px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      line-height: 1.45;
+    .slip-title { font-size: 19px; font-weight: 800; letter-spacing: 0.42em; }
+    .slip-date { font-size: 12px; color: var(--sub); }
+
+    .slip-cols, .slip-row {
+      display: grid;
+      grid-template-columns: 1fr 74px 78px;
+      gap: 6px;
+      align-items: baseline;
     }
 
-    .check-list li svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-      stroke: var(--green);
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .slip-cols { font-size: 12px; color: var(--sub); padding: 8px 0 6px; border-bottom: 1px solid var(--ink); }
+    .slip-cols span:not(:first-child), .slip-row span:not(:first-child) { text-align: right; }
+
+    .slip-row { position: relative; padding: 13px 0; border-bottom: 1px dashed #b9b2a4; font-size: 15px; }
+    .slip-row .item { font-weight: 600; line-height: 1.35; }
+    .slip-row .was { position: relative; color: var(--sub); font-size: 14px; }
+
+    .slip-row .was::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      right: -4px;
+      top: 48%;
+      border-top: 2px solid var(--pen);
+      transform: rotate(-7deg);
     }
 
-    .price-note {
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
+    .slip-row .now { font-weight: 800; font-size: 16px; }
+
+    .slip-row .cut {
+      position: absolute;
+      right: 2px;
+      bottom: -13px;
+      font-size: 22px;
+      line-height: 1;
+      transform: rotate(-4deg);
+      background: var(--sheet);
+      padding: 0 4px;
+      z-index: 1;
     }
 
-    .worry-box {
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 24px 20px;
-      text-align: center;
+    .slip-memo {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 27px;
+      line-height: 1.15;
+      padding: 8px 18px 6px;
+      border: 2px solid var(--pen);
+      border-radius: 54% 46% 52% 48% / 58% 44% 56% 42%;
+      transform: rotate(-3deg);
     }
 
-    .worry-box p {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      line-height: 1.5;
+    .slip-foot { margin-top: 16px; font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+    /* ── 공통 칸 ── */
+    .band { padding: 56px 0; border-top: 2px solid var(--rule); }
+
+    .band h2 {
+      font-size: 29px;
+      font-weight: 800;
+      line-height: 1.28;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
     }
 
-    /* ── Supplier ── */
-    .supplier {
-      background: var(--charcoal);
-      color: var(--white);
-      text-align: center;
-    }
+    .band .lead { font-size: 17px; line-height: 1.65; color: var(--sub); margin-bottom: 28px; }
 
-    .supplier h2 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
+    /* 사장님 말 */
+    .said { list-style: none; border-top: 1px solid var(--hair); }
 
-    .supplier p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.65);
-      line-height: 1.6;
-      margin-bottom: 6px;
-    }
-
-    .supplier .price-info {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.55);
-      margin-bottom: 20px;
-      margin-top: 12px;
-    }
-
-    /* ── Final CTA ── */
-    .final-cta {
-      background: var(--green);
-      color: var(--white);
-      text-align: center;
-    }
-
-    .final-cta h2 {
+    .said li {
       font-size: 20px;
       font-weight: 700;
-      margin-bottom: 10px;
       line-height: 1.45;
+      letter-spacing: -0.03em;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--hair);
     }
 
-    .final-cta p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
+    .said li::before { content: '“'; color: var(--sub); margin-right: 2px; }
+    .said li::after { content: '”'; color: var(--sub); margin-left: 2px; }
 
-    .final-cta .fine-print {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.65);
-      margin-top: 16px;
-      margin-bottom: 0;
-    }
+    /* 세 가지 길 */
+    .ways { list-style: none; counter-reset: way; }
 
-    /* ── Exit prevention ── */
-    .exit {
-      background: var(--charcoal);
-      color: var(--white);
-      text-align: center;
-      padding: 36px 20px 40px;
-    }
-
-    .exit .thin-line {
-      width: 40px;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.25);
-      margin: 0 auto 28px;
-    }
-
-    .exit h2 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .exit p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.65);
-      line-height: 1.75;
-      margin-bottom: 24px;
-    }
-
-    /* ── Footer ── */
-    .footer {
-      background: var(--bg);
-      color: #c0bdb5;
-      font-size: 12px;
-      line-height: 1.8;
-      border-top: 1px solid var(--border);
-      padding: 20px 24px;
-    }
-
-    .footer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .footer-brand {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .footer-toggle {
-      flex-shrink: 0;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: inherit;
-      font-size: 12px;
-      line-height: 1.8;
-      color: #c0bdb5;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .footer-toggle:hover {
-      color: var(--muted);
-    }
-
-    .footer-details-wrap {
+    .ways li {
+      counter-increment: way;
       display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.3s ease;
+      grid-template-columns: 54px 1fr;
+      padding: 24px 0;
+      border-top: 1px solid var(--hair);
     }
 
-    .footer-details-wrap.is-open {
-      grid-template-rows: 1fr;
-    }
+    .ways li:last-child { border-bottom: 1px solid var(--hair); }
 
-    .footer-details {
-      overflow: hidden;
-    }
-
-    .footer-details-inner {
-      padding-top: 12px;
-    }
-
-    .footer-details p {
-      margin: 0;
-    }
-
-    .footer-details a {
-      color: #c0bdb5;
-      text-decoration: none;
-    }
-
-    /* ── 카카오톡 버튼 ── */
-    .btn-kakao {
-      background: #fee500;
-      color: #191600;
-    }
-
-    /* ── 회원가 예시 ── */
-    .deal-box {
-      background: var(--white);
-      color: var(--charcoal);
-      border-radius: 8px;
-      padding: 18px 16px;
-      margin-bottom: 16px;
-    }
-
-    .deal-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .deal-title span {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      margin-left: 6px;
-    }
-
-    .deal-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      padding: 10px 0;
-      border-top: 1px solid var(--border);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .deal-name {
-      min-width: 0;
-    }
-
-    .deal-price {
-      flex-shrink: 0;
-      font-weight: 700;
+    .ways li::before {
+      content: counter(way);
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
       color: var(--green);
-      white-space: nowrap;
     }
 
-    .deal-price s {
-      font-weight: 400;
-      font-size: 12px;
-      color: var(--muted);
-      margin-right: 4px;
-    }
+    .ways h3 { font-size: 21px; font-weight: 800; line-height: 1.35; letter-spacing: -0.035em; margin-bottom: 8px; }
+    .ways p { font-size: 16px; line-height: 1.65; color: #3d3832; }
+    .ways .tag { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--sub); border: 1px solid var(--sub); border-radius: 2px; padding: 2px 7px; }
 
-    .deal-note {
-      font-size: 12px;
-      color: var(--muted);
+    .promise {
+      margin: 30px 0 26px;
+      font-size: 20px;
+      font-weight: 800;
       line-height: 1.55;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
+      letter-spacing: -0.035em;
     }
 
-    .solution-honest {
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
+    .promise mark { background: linear-gradient(transparent 58%, #ffe36e 58%); color: inherit; padding: 0 2px; }
 
-    /* ── FAQ ── */
-    .faq {
-      background: var(--bg);
-    }
+    /* 카톡 */
+    .chat { background: #b9cddb; padding: 22px 16px 24px; }
+    .chat-day { text-align: center; font-size: 12px; color: #4f6373; margin-bottom: 16px; }
+    .chat-line { display: flex; margin-bottom: 10px; }
+    .chat-line.me { justify-content: flex-end; }
 
-    .faq .section-label {
-      color: var(--muted);
-    }
-
-    .faq details {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-    }
-
-    .faq details + details {
-      margin-top: 8px;
-    }
-
-    .faq summary {
+    .bubble {
+      max-width: 82%;
       font-size: 15px;
-      font-weight: 600;
-      line-height: 1.5;
-      cursor: pointer;
+      line-height: 1.55;
+      padding: 10px 13px;
+      border-radius: 14px;
+      background: #fff;
+      color: #1b1815;
     }
 
-    .faq details p {
-      font-size: 14px;
-      line-height: 1.65;
-      color: #555555;
-      margin-top: 10px;
+    .chat-line.me .bubble { background: var(--kakao); }
+    .bubble.photo { padding: 8px; }
+
+    .mini-slip {
+      width: 132px;
+      background: var(--sheet);
+      padding: 10px 10px 12px;
+      font-size: 10px;
+      line-height: 1.9;
+      color: #57514a;
+    }
+
+    .mini-slip b { display: block; font-size: 11px; letter-spacing: 0.3em; color: var(--ink); border-bottom: 1px solid var(--ink); margin-bottom: 4px; }
+    .mini-slip i { display: block; font-style: normal; border-bottom: 1px dashed #b9b2a4; }
+
+    .who { font-size: 12px; color: #4f6373; margin: 0 0 4px 2px; }
+    .chat-note { margin-top: 12px; font-size: 13px; color: var(--sub); }
+
+    /* 먹색 칸 */
+    .dark { background: var(--ink); color: var(--paper); border-top: none; }
+    .dark .kicker { font-size: 26px; margin-bottom: 6px; display: block; }
+    .dark h2 { color: var(--paper); }
+    .dark p { font-size: 17px; line-height: 1.7; color: #cfc8ba; }
+    .dark .pair > div + div { margin-top: 44px; padding-top: 44px; border-top: 1px solid #4a443d; }
+    .dark strong { color: #fff; font-weight: 700; }
+
+    /* 그다음 */
+    .after { list-style: none; border-top: 1px solid var(--hair); }
+    .after li { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--hair); font-size: 18px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.45; }
+    .after li span { color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+    /* 가격 */
+    .price-big { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 8px; }
+    .price-big .zero { font-size: 92px; font-weight: 800; line-height: 0.95; letter-spacing: -0.06em; }
+    .price-big .zero small { font-size: 38px; letter-spacing: -0.04em; margin-left: 2px; }
+    .price-big .list { position: relative; font-size: 22px; font-weight: 600; color: var(--sub); }
+    .price-big .list::after { content: ''; position: absolute; left: -4px; right: -6px; top: 50%; border-top: 3px solid var(--pen); transform: rotate(-6deg); }
+    .price-pen { font-size: 28px; line-height: 1.2; margin-bottom: 26px; display: block; transform: rotate(-1.5deg); transform-origin: left; }
+
+    .gets { list-style: none; border-top: 2px solid var(--rule); margin-bottom: 14px; }
+    .gets li { padding: 13px 0; border-bottom: 1px solid var(--hair); font-size: 17px; font-weight: 600; letter-spacing: -0.03em; }
+    .roi { font-size: 15px; color: var(--sub); line-height: 1.65; margin-bottom: 24px; }
+
+    /* 묻는 말 */
+    .faq details { border-bottom: 1px solid var(--hair); }
+    .faq details:first-of-type { border-top: 2px solid var(--rule); }
+    .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 19px 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.45; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; font-size: 24px; font-weight: 400; line-height: 1; flex-shrink: 0; }
+    .faq details[open] summary::after { content: '−'; }
+    .faq details p { font-size: 16px; line-height: 1.7; color: #3d3832; padding: 0 0 20px; }
+
+    /* 맺음 */
+    .last { background: var(--green); color: #fff; border-top: none; }
+    .last h2 { color: #fff; }
+    .last p { font-size: 17px; line-height: 1.65; color: #d5e4da; margin-bottom: 26px; }
+    .last .btn-go { background: #fff; border-color: #fff; color: var(--green); }
+    .last .btn-line { border-color: #fff; color: #fff; }
+
+    /* 바닥 */
+    .foot { padding: 30px 0 34px; font-size: 13px; line-height: 1.85; color: var(--sub); border-top: 2px solid var(--rule); }
+    .foot .supplier { font-size: 15px; color: var(--ink); padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--hair); }
+    .foot .supplier a { font-weight: 700; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+    .foot b { color: var(--ink); }
+
+    /* 아래 고정 버튼 (휴대폰) */
+    .dock {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 8px;
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: var(--paper);
+      border-top: 2px solid var(--rule);
+    }
+
+    .dock .btn { min-height: 50px; font-size: 16px; padding: 0 8px; }
+    .dock .btn + .btn { margin-top: 0; }
+
+    /* ── 넓은 화면 ── */
+    @media (min-width: 900px) {
+      :root { --pad: 40px; }
+      body { padding-bottom: 0; }
+      .dock { display: none; }
+      .top .wrap { height: 68px; }
+      .brand { font-size: 25px; }
+
+      .hero { padding: 76px 0 96px; }
+      .hero .wrap { display: grid; grid-template-columns: 1fr 400px; gap: 72px; align-items: center; }
+      .hero h1 { font-size: 64px; margin-bottom: 26px; }
+      .hero-lead { font-size: 21px; max-width: 520px; margin-bottom: 34px; }
+      .hero-actions { display: flex; gap: 12px; max-width: 520px; }
+      .hero-actions .btn + .btn { margin-top: 0; }
+      .slip-area { margin-top: 0; padding: 0; }
+
+      .band { padding: 92px 0; }
+      .band h2 { font-size: 40px; }
+      .split { display: grid; grid-template-columns: 340px 1fr; gap: 80px; align-items: start; }
+      .split > :first-child { position: sticky; top: 104px; }
+      .said li { font-size: 24px; padding: 22px 0; }
+      .ways li { grid-template-columns: 84px 1fr; padding: 32px 0; }
+      .ways li::before { font-size: 76px; }
+      .ways h3 { font-size: 25px; }
+      .ways p { font-size: 17px; }
+      .promise { font-size: 24px; }
+      .chat { max-width: 440px; padding: 26px 20px 28px; }
+      .dark .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+      .dark .pair > div + div { margin-top: 0; padding-top: 0; border-top: none; }
+      .price-big .zero { font-size: 132px; }
+      .gets { columns: 2; column-gap: 48px; }
+      .gets li { break-inside: avoid; }
+      .last .wrap { max-width: 720px; text-align: center; }
+      .last .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .last .actions .btn + .btn { margin-top: 0; }
+      .btn-buy { max-width: 360px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .footer-details-wrap {
-        transition: none;
-      }
+      html { scroll-behavior: auto; }
     }
   </style>
   <script type="application/ld+json">
@@ -839,289 +454,262 @@
   </script>
 </head>
 <body>
-  <div class="page">
 
-    <!-- 1. Header -->
-    <header class="header">
-      <a href="/" class="logo" aria-label="식식이 홈">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2C8 6 4 8 4 13c0 4.4 3.6 8 8 8s8-3.6 8-8c0-5-4-7-8-11z" fill="var(--green)"/>
-          <path d="M12 22V10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M9 14c1.5 1 4.5 1 6 0" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        식식이
-      </a>
-      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-sm btn-orange">시작하기</a>
-    </header>
+  <header class="top">
+    <div class="wrap">
+      <a href="/" class="brand" aria-label="식식이 홈">식식이<small>식당 식자재</small></a>
+      <a href="https://restaurant.siksiki.com/?mode=signup" class="top-link">무료로 시작</a>
+    </div>
+  </header>
 
-    <!-- 2. Hero -->
+  <main>
+
+    <!-- 1. 첫 화면 -->
     <section class="hero">
-      <p class="section-label">식당 사장님 전용 · 식자재</p>
-      <h1 class="section-head">
-        지금 쓰시는 식자재,<br />
-        <span class="accent">더 싸게</span> 구해드립니다.
-      </h1>
-      <p class="section-sub">전표 사진 한 장이면 됩니다. 식식이가 가격을 살펴보고, 더 싸게 살 수 있는 길을 찾아드립니다.</p>
-
-      <div class="steps">
-        <div class="step-card">
-          <span class="step-num">01</span>
-          <span class="step-text">지금 받는 전표(거래명세서) 사진을 카카오톡으로 보내주세요</span>
-        </div>
-        <div class="step-card">
-          <span class="step-num">02</span>
-          <span class="step-text">식식이가 품목별 가격을 직접 살펴봅니다</span>
-        </div>
-        <div class="step-card">
-          <span class="step-num">03</span>
-          <span class="step-text">더 싸게 살 수 있는 품목과 방법을 알려드립니다</span>
-        </div>
-      </div>
-
-      <p class="hero-note">식자재 등록도, 가격 협상도 식식이가 대신 합니다. 거래처를 바꾸라고 하지 않습니다. 싸게 살 수 있는 품목만 골라 바꾸시면 됩니다.</p>
-
-      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
-      <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 전표 보내기</a>
-    </section>
-
-    <!-- 3. Empathy -->
-    <section class="empathy">
-      <p class="section-label">사장님, 이런 적 있으신가요</p>
-      <h2 class="section-head">식자재, 제값에 사고 있는 건지 모르겠다.</h2>
-      <p class="section-sub">매달 가장 크게 나가는 돈인데, 비교해 볼 시간도 물어볼 곳도 없습니다.</p>
-
-      <div class="pain-list">
-        <div class="pain-card">식재료 값은 오르는데 메뉴 가격은 못 올리고 있다</div>
-        <div class="pain-card">어디서 사는 게 싼지 비교할 시간이 없다</div>
-        <div class="pain-card">오래 거래한 곳이라 가격 얘기를 꺼내기 미안하다</div>
-        <div class="pain-card">옆 가게는 같은 걸 얼마에 사는지 모른다</div>
-      </div>
-
-      <div class="cta-band">
-        <p>전표 한 장만 보내보세요. 살펴보는 데 비용은 없습니다.</p>
-        <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 전표 보내기</a>
-      </div>
-    </section>
-
-    <!-- 4. Solution — 싸게 해드리는 세 가지 길 -->
-    <section class="solution">
-      <p class="section-label">식식이가 싸게 해드리는 방법</p>
-      <h2 class="section-head">세 가지 길로 식자재 값을 낮춥니다.</h2>
-      <p class="section-sub">있는 건 회원가로, 없는 건 찾아서, 납품 받는 건 견적으로.</p>
-
-      <div class="feature-list">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 7h16l-1.5 9h-13L4 7z"/><path d="M9 20h.01M16 20h.01M4 7L3 4H1"/></svg>
+      <div class="wrap">
+        <div>
+          <h1>지금 쓰시는 식자재,<br /><em>더 싸게</em> 구해드립니다.</h1>
+          <p class="hero-lead">전표 사진 한 장이면 됩니다. 식자재 등록도, 가격 협상도 식식이가 대신 합니다. 거래처를 바꾸라고 하지 않습니다.</p>
+          <div class="hero-actions">
+            <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go">무료로 시작하기</a>
+            <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao">카톡으로 전표 보내기</a>
           </div>
-          <div>
-            <p class="feature-title">자주 쓰는 식자재를 회원가로</p>
-            <p class="feature-desc">정가보다 낮은 회원가로 팝니다. 장바구니에서 구독회원 추가 할인이 한 번 더 붙습니다.</p>
-          </div>
+          <p class="hero-fine">오픈 이벤트 기간 무료 · 카드 등록 없음</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>
-          </div>
-          <div>
-            <p class="feature-title">식식이에 없으면 찾아드립니다</p>
-            <p class="feature-desc">쓰시는 식자재를 알려주시면 식식이가 대신 알아보고 가격을 협상합니다. 원재료가 같은 다른 제품도 함께 알려드립니다.</p>
-          </div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg>
-          </div>
-          <div>
-            <p class="feature-title">납품 받는 품목은 발주요청으로</p>
-            <p class="feature-desc">원하는 품목과 조건을 올리면 식식이가 고른 유통업체가 견적을 드립니다. 지역별로 순서대로 엽니다.</p>
+
+        <div class="slip-area">
+          <div class="slip">
+            <div class="slip-head">
+              <span class="slip-title">거래명세서</span>
+              <span class="slip-date num">2026. 10. 14</span>
+            </div>
+            <div class="slip-cols"><span>품목</span><span>정가</span><span>식식이 회원가</span></div>
+            <div class="slip-row">
+              <span class="item">해내음 들기름 1.8L</span>
+              <span class="was num">35,000</span>
+              <span class="now num">29,000</span>
+              <span class="cut pen">−6,000원</span>
+            </div>
+            <div class="slip-row">
+              <span class="item">해내음 만능 비빔 양념장 2kg</span>
+              <span class="was num">15,000</span>
+              <span class="now num">12,500</span>
+              <span class="cut pen">−2,500원</span>
+            </div>
+            <div class="slip-row">
+              <span class="item">해내음 메주시골된장 14kg</span>
+              <span class="was num">62,000</span>
+              <span class="now num">58,500</span>
+              <span class="cut pen">−3,500원</span>
+            </div>
+            <span class="slip-memo pen">장바구니에서 10% 더!</span>
+            <p class="slip-foot">식식이에서 실제로 파는 가격입니다(2026년 10월 14일 기준). 가격은 바뀔 수 있습니다.</p>
           </div>
         </div>
       </div>
-
-      <div class="deal-box">
-        <p class="deal-title">지금 회원가 <span>2026년 10월 14일 기준</span></p>
-        <div class="deal-row">
-          <span class="deal-name">해내음 들기름 1.8L</span>
-          <span class="deal-price"><s>35,000원</s> 29,000원</span>
-        </div>
-        <div class="deal-row">
-          <span class="deal-name">해내음 만능 비빔 양념장 2kg</span>
-          <span class="deal-price"><s>15,000원</s> 12,500원</span>
-        </div>
-        <div class="deal-row">
-          <span class="deal-name">해내음 메주시골된장 14kg</span>
-          <span class="deal-price"><s>62,000원</s> 58,500원</span>
-        </div>
-        <p class="deal-note">여기에 장바구니에서 구독회원 추가 할인 10%가 더 붙습니다. 가격은 바뀔 수 있습니다.</p>
-      </div>
-
-      <p class="solution-honest">더 싸게 구할 수 없는 품목은 "지금 잘 사고 계십니다"라고 말씀드립니다.</p>
-
-      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
-      <a href="https://restaurant.siksiki.com/browse" class="btn btn-ghost btn-block">지금 살 수 있는 상품 보기</a>
     </section>
 
-    <!-- 5. 왜 가격 얘기를 못 꺼내나 -->
-    <section class="secret-light">
-      <p class="secret-number">아무도 말 안 해주는 것 01</p>
-      <h2 class="section-head">오래 거래할수록 왜 내가 을이 됐을까요.</h2>
-      <p class="body-text">가격을 따지기 미안하고 바꾸기도 불편합니다. 납품업체가 나쁜 게 아닙니다. 그쪽도 여러 유통 단계를 거쳐 어쩔 수 없는 가격인 경우가 많습니다.</p>
-      <p class="emphasis-text">건강한 거래 관계란 가격을 말할 수 있는 관계입니다. 가격 협상은 식식이가 대신 해드립니다.</p>
-    </section>
-
-    <!-- 6. 옆 가게 가격 -->
-    <section class="secret-dark">
-      <p class="secret-number">아무도 말 안 해주는 것 02</p>
-      <h2 class="section-head">옆 가게보다 비싸게 사고 있을 수 있습니다.</h2>
-      <p class="body-text">같은 된장을 어떤 사장님은 싸게, 어떤 사장님은 비싸게 삽니다. <span class="emphasis">모르면 계속 비싸게 삽니다.</span></p>
-      <hr class="divider" />
-      <p class="emphasis-text">식식이는 무조건 싼 것만 찾지 않습니다. 오래 믿고 쓸 수 있는 식자재를 찾습니다. 사장님 식당이 오래 가야 하니까요.</p>
-    </section>
-
-    <!-- 7. 싸게 산 다음 -->
-    <section class="empathy">
-      <p class="section-label">싸게 산 다음도 챙깁니다</p>
-      <h2 class="section-head">아낀 돈이 어디로 가는지도 보입니다.</h2>
-      <p class="section-sub">휴대폰 하나로 됩니다.</p>
-
-      <div class="pain-list" style="margin-bottom: 0;">
-        <div class="pain-card">메뉴 한 그릇에 얼마 남는지 계산해 드립니다</div>
-        <div class="pain-card">거래처별로 줄 돈과 이번 주 나갈 돈을 정리해 드립니다</div>
-        <div class="pain-card">여러 거래처 발주를 한 곳에서 합니다</div>
+    <!-- 2. 사장님 말 -->
+    <section class="band">
+      <div class="wrap split">
+        <div>
+          <h2>식자재, 제값에<br />사고 있는 걸까요.</h2>
+          <p class="lead">매달 가장 크게 나가는 돈인데, 비교해 볼 시간도 물어볼 곳도 없습니다.</p>
+        </div>
+        <ul class="said">
+          <li>식재료 값은 오르는데 메뉴 가격은 못 올린다</li>
+          <li>어디서 사는 게 싼지 비교할 시간이 없다</li>
+          <li>오래 거래한 곳이라 가격 얘기를 꺼내기 미안하다</li>
+          <li>옆 가게는 같은 걸 얼마에 사는지 모른다</li>
+        </ul>
       </div>
     </section>
 
-    <!-- 8. Pricing -->
-    <section class="pricing">
-      <p class="section-label">가격</p>
-      <h2 class="section-head">지금은 무료입니다.</h2>
-      <p class="section-sub">오픈 이벤트 기간에는 구독료를 받지 않습니다. 카드 등록도 없습니다. 구독회원 혜택은 그대로 드립니다.</p>
-
-      <div class="price-card">
-        <div class="price-card-top">
-          <p class="plan-name">식당 사장님</p>
-          <p class="plan-price">오픈 이벤트 기간 무료</p>
-          <p class="plan-list-price">정가 월 29,000원</p>
+    <!-- 3. 세 가지 길 -->
+    <section class="band">
+      <div class="wrap split">
+        <div>
+          <h2>세 가지 길로<br />식자재 값을 낮춥니다.</h2>
+          <p class="lead">있는 건 회원가로, 없는 건 찾아서, 납품 받는 건 견적으로.</p>
         </div>
-        <div class="price-roi">월 식재료비 300만원에서 1%만 아껴도 월 3만원입니다.</div>
-        <div class="price-card-bottom">
-          <ul class="check-list">
+        <div>
+          <ol class="ways">
             <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              식자재 회원가 구매
+              <div>
+                <h3>자주 쓰는 식자재를 회원가로</h3>
+                <p>정가보다 낮은 회원가로 팝니다. 장바구니에서 구독회원 추가 할인이 한 번 더 붙습니다.</p>
+              </div>
             </li>
             <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              장바구니 구독회원 추가 할인
+              <div>
+                <h3>식식이에 없으면 찾아드립니다</h3>
+                <p>쓰시는 식자재를 알려주시면 식식이가 대신 알아보고 가격을 협상합니다. 원재료가 같은 다른 제품도 함께 알려드립니다.</p>
+              </div>
             </li>
             <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              초기 식자재 세팅 대행
+              <div>
+                <h3>납품 받는 품목은 발주요청으로</h3>
+                <p>원하는 품목과 조건을 올리면 식식이가 고른 유통업체가 견적을 드립니다.</p>
+                <span class="tag">지역별로 순서대로 엽니다</span>
+              </div>
             </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              쓰시던 식자재 가격 점검 · 가격 협상 대행
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              없는 식자재 찾아드림
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              유통업체 발주요청
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
-              메뉴별 원가 계산 · 줄 돈 관리
-            </li>
+          </ol>
+
+          <p class="promise">더 싸게 구할 수 없는 품목은<br /><mark>“지금 잘 사고 계십니다”</mark>라고 말씀드립니다.</p>
+
+          <a href="https://restaurant.siksiki.com/browse" class="text-link">지금 살 수 있는 상품 보기 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 카톡으로 -->
+    <section class="band">
+      <div class="wrap split">
+        <div>
+          <h2>카톡으로 전표 한 장.<br />그게 전부입니다.</h2>
+          <p class="lead">지금 받는 전표(거래명세서)를 찍어 보내주세요. 식식이가 품목별 가격을 직접 살펴보고 답을 드립니다. 살펴보는 데 비용은 없습니다.</p>
+          <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-buy">카톡으로 전표 보내기</a>
+        </div>
+        <div>
+          <div class="chat" aria-label="카카오톡 대화 예시">
+            <p class="chat-day">대화 예시</p>
+            <div class="chat-line me">
+              <div class="bubble photo">
+                <div class="mini-slip"><b>거래명세서</b><i>들기름 1.8L</i><i>양념장 2kg</i><i>된장 14kg</i><i>식용유 18L</i></div>
+              </div>
+            </div>
+            <div class="chat-line me"><div class="bubble">저희 가게 전표인데 가격 좀 봐주세요</div></div>
+            <p class="who">식식이</p>
+            <div class="chat-line"><div class="bubble">네 사장님, 확인했습니다.<br />들기름·양념장·된장은 더 싸게 드릴 수 있습니다.</div></div>
+            <div class="chat-line"><div class="bubble">식용유는 지금 잘 사고 계십니다. 그대로 쓰세요.</div></div>
+          </div>
+          <p class="chat-note">이해를 돕기 위한 예시 대화입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 아무도 말 안 해주는 것 -->
+    <section class="band dark">
+      <div class="wrap pair">
+        <div>
+          <span class="kicker pen">아무도 말 안 해주는 것 ①</span>
+          <h2>오래 거래할수록<br />왜 내가 을이 됐을까요.</h2>
+          <p>가격을 따지기 미안하고 바꾸기도 불편합니다. 납품업체가 나쁜 게 아닙니다. 그쪽도 여러 유통 단계를 거쳐 어쩔 수 없는 가격인 경우가 많습니다. <strong>가격 협상은 식식이가 대신 해드립니다.</strong></p>
+        </div>
+        <div>
+          <span class="kicker pen">아무도 말 안 해주는 것 ②</span>
+          <h2>옆 가게보다 비싸게<br />사고 있을 수 있습니다.</h2>
+          <p>같은 된장을 어떤 사장님은 싸게, 어떤 사장님은 비싸게 삽니다. 모르면 계속 비싸게 삽니다. <strong>그렇다고 무조건 싼 것만 찾지는 않습니다.</strong> 오래 믿고 쓸 수 있는 식자재를 찾습니다. 사장님 식당이 오래 가야 하니까요.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 싸게 산 다음 -->
+    <section class="band" style="border-top: none;">
+      <div class="wrap split">
+        <div>
+          <h2>싸게 산 다음도<br />챙깁니다.</h2>
+          <p class="lead">아낀 돈이 어디로 가는지 보입니다. 휴대폰 하나로 됩니다.</p>
+        </div>
+        <ul class="after">
+          <li><span>—</span>메뉴 한 그릇에 얼마 남는지 계산해 드립니다</li>
+          <li><span>—</span>거래처별로 줄 돈과 이번 주 나갈 돈을 정리해 드립니다</li>
+          <li><span>—</span>여러 거래처 발주를 한 곳에서 합니다</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. 가격 -->
+    <section class="band">
+      <div class="wrap split">
+        <div>
+          <h2>지금은 무료입니다.</h2>
+          <p class="lead">오픈 이벤트 기간에는 구독료를 받지 않습니다. 카드 등록도 없습니다. 구독회원 혜택은 그대로 드립니다.</p>
+        </div>
+        <div>
+          <div class="price-big">
+            <span class="zero num">0<small>원</small></span>
+            <span class="list num">월 29,000원</span>
+          </div>
+          <span class="price-pen pen">오픈 이벤트 기간 무료!</span>
+
+          <ul class="gets">
+            <li>식자재 회원가 구매</li>
+            <li>장바구니 구독회원 추가 할인</li>
+            <li>초기 식자재 세팅 대행</li>
+            <li>쓰시던 식자재 가격 점검 · 가격 협상 대행</li>
+            <li>없는 식자재 찾아드림</li>
+            <li>유통업체 발주요청</li>
+            <li>메뉴별 원가 계산 · 줄 돈 관리</li>
           </ul>
-          <p class="price-note">카드 등록 없이 시작 · 이벤트 종료 전 미리 안내드립니다</p>
+          <p class="roi">월 식재료비 300만원에서 1%만 아껴도 월 3만원입니다. 이벤트가 끝나기 전에 미리 안내드립니다.</p>
+          <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go btn-buy">무료로 시작하기</a>
         </div>
       </div>
-
-      <div class="worry-box">
-        <p>아직 고민되시나요? 지금은 무료입니다. 먼저 써보세요.</p>
-        <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
-      </div>
     </section>
 
-    <!-- 9. FAQ -->
-    <section class="faq">
-      <p class="section-label">자주 묻는 질문</p>
-      <details>
-        <summary>무료는 언제까지인가요?</summary>
-        <p>오픈 이벤트 기간 동안입니다. 끝나기 전에 미리 안내드립니다. 카드를 등록받지 않기 때문에 자동으로 결제되는 일은 없습니다.</p>
-      </details>
-      <details>
-        <summary>지금 거래처를 계속 써도 되나요?</summary>
-        <p>네. 거래처를 바꾸라고 하지 않습니다. 더 싸게 살 수 있는 품목만 골라서 바꾸시면 됩니다.</p>
-      </details>
-      <details>
-        <summary>식식이에 없는 식자재는 어떻게 하나요?</summary>
-        <p>쓰시는 품목을 알려주시면 찾아봅니다. 더 싸게 구할 수 없으면 그렇다고 말씀드립니다.</p>
-      </details>
-      <details>
-        <summary>배송비는 얼마인가요?</summary>
-        <p>주문 한 번에 3,000원입니다. 무료배송 상품도 있고, 여러 개 담으면 무료가 되는 상품도 있습니다.</p>
-      </details>
-      <details>
-        <summary>컴퓨터가 없어도 되나요?</summary>
-        <p>네. 휴대폰으로 가입부터 주문까지 할 수 있습니다.</p>
-      </details>
-    </section>
-
-    <!-- 10. Final CTA -->
-    <section class="final-cta">
-      <h2>사장님이 조금 더 편하셨으면 합니다.</h2>
-      <p>현장을 직접 찾아다니며 만들었습니다. 전표 한 장부터 보내보세요.</p>
-      <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-orange btn-block">무료로 시작하기 →</a>
-      <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-block">카카오톡으로 물어보기</a>
-      <a href="tel:032-215-3207" class="btn btn-ghost btn-block">전화 문의 032-215-3207</a>
-      <p class="fine-print">오픈 이벤트 기간 무료 · 카드 등록 없이 시작</p>
-    </section>
-
-    <!-- 11. Supplier -->
-    <section class="supplier">
-      <h2>식자재 공급업체이신가요?</h2>
-      <p>식식이와 함께 검증된 식당 거래처를 만나보세요.</p>
-      <a href="tel:032-215-3207" class="btn btn-ghost btn-block" style="margin-top: 16px;">입점 문의 전화 032-215-3207</a>
-    </section>
-
-    <!-- 13. Footer -->
-    <footer class="footer">
-      <div class="footer-row">
-        <span class="footer-brand">식식이 · KOJOMO LAB · © 2025</span>
-        <button type="button" class="footer-toggle" aria-expanded="false" aria-controls="footer-details">사업자 정보 ∨</button>
-      </div>
-      <div class="footer-details-wrap" id="footer-details">
-        <div class="footer-details">
-          <div class="footer-details-inner">
-            <p>상호명: 디닷페이스</p>
-            <p>사업자등록번호: 728-02-02513</p>
-            <p>통신판매업신고번호: 제2026-인천부평-0405호</p>
-            <p>대표: 김정무</p>
-            <p>주소: 인천광역시 부평구 장제로155번길 24</p>
-            <p>이메일: <a href="mailto:siksiki.center@gmail.com">siksiki.center@gmail.com</a></p>
-            <p>고객센터: <a href="tel:032-215-3207">032-215-3207</a> | <a href="tel:010-4945-6662">010-4945-6662</a></p>
-          </div>
+    <!-- 8. 묻는 말 -->
+    <section class="band faq">
+      <div class="wrap split">
+        <div>
+          <h2>자주 묻는 질문</h2>
+        </div>
+        <div>
+          <details>
+            <summary>무료는 언제까지인가요?</summary>
+            <p>오픈 이벤트 기간 동안입니다. 끝나기 전에 미리 안내드립니다. 카드를 등록받지 않기 때문에 자동으로 결제되는 일은 없습니다.</p>
+          </details>
+          <details>
+            <summary>지금 거래처를 계속 써도 되나요?</summary>
+            <p>네. 거래처를 바꾸라고 하지 않습니다. 더 싸게 살 수 있는 품목만 골라서 바꾸시면 됩니다.</p>
+          </details>
+          <details>
+            <summary>식식이에 없는 식자재는 어떻게 하나요?</summary>
+            <p>쓰시는 품목을 알려주시면 찾아봅니다. 더 싸게 구할 수 없으면 그렇다고 말씀드립니다.</p>
+          </details>
+          <details>
+            <summary>배송비는 얼마인가요?</summary>
+            <p>주문 한 번에 3,000원입니다. 무료배송 상품도 있고, 여러 개 담으면 무료가 되는 상품도 있습니다.</p>
+          </details>
+          <details>
+            <summary>컴퓨터가 없어도 되나요?</summary>
+            <p>네. 휴대폰으로 가입부터 주문까지 할 수 있습니다.</p>
+          </details>
         </div>
       </div>
-    </footer>
+    </section>
 
+    <!-- 9. 맺음 -->
+    <section class="band last">
+      <div class="wrap">
+        <h2>사장님이 조금 더<br />편하셨으면 합니다.</h2>
+        <p>현장을 직접 찾아다니며 만들었습니다. 전표 한 장부터 보내보세요.</p>
+        <div class="actions">
+          <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go">무료로 시작하기</a>
+          <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao">카톡으로 물어보기</a>
+          <a href="tel:032-215-3207" class="btn btn-line">전화 032-215-3207</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p class="supplier">식자재 공급업체이신가요? <a href="tel:032-215-3207">입점 문의 032-215-3207</a></p>
+      <p><b>식식이</b> · KOJOMO LAB · © 2026</p>
+      <p>상호명: 디닷페이스 · 대표: 김정무 · 사업자등록번호: 728-02-02513</p>
+      <p>통신판매업신고번호: 제2026-인천부평-0405호</p>
+      <p>주소: 인천광역시 부평구 장제로155번길 24</p>
+      <p>이메일: <a href="mailto:siksiki.center@gmail.com">siksiki.center@gmail.com</a> · 고객센터: <a href="tel:032-215-3207">032-215-3207</a> | <a href="tel:010-4945-6662">010-4945-6662</a></p>
+    </div>
+  </footer>
+
+  <!-- 휴대폰: 아래 고정 버튼 -->
+  <div class="dock">
+    <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao">카톡 문의</a>
+    <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go">무료로 시작하기</a>
   </div>
-  <script>
-    (function () {
-      var btn = document.querySelector('.footer-toggle');
-      var panel = document.getElementById('footer-details');
-      if (!btn || !panel) return;
 
-      btn.addEventListener('click', function () {
-        var open = panel.classList.toggle('is-open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        btn.textContent = open ? '사업자 정보 ∧' : '사업자 정보 ∨';
-      });
-    })();
-  </script>
 </body>
 </html>

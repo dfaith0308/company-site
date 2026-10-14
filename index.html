@@ -133,7 +133,6 @@
     .hero h1 em {
       font-style: normal;
       color: var(--pen);
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 22 2, 40 11, 62 6 S 100 3, 118 7' fill='none' stroke='%23d4371c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 10px;
       padding-bottom: 8px;
     }
 
@@ -426,10 +425,82 @@
       .btn-buy { max-width: 360px; }
     }
 
+    /* ── 움직임 ──
+       화면에 들어올 때 한 번만 떠오른다(다시 사라지지 않는다 — 읽는 걸 방해하지 않게).
+       스크립트가 꺼져 있거나 "움직임 줄이기"를 켠 사람에게는 처음부터 다 보인다. */
+    .hero h1 em { position: relative; }
+
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 22 2, 40 11, 62 6 S 100 3, 118 7' fill='none' stroke='%23d4371c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 10px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .js [data-rv] {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+        transition-delay: var(--d, 0ms);
+      }
+
+      .js [data-rv].in { opacity: 1; transform: none; }
+
+      /* 카톡 말풍선은 아래에서 톡 올라온다 */
+      .js .chat [data-rv] { transform: translateY(10px) scale(0.96); transform-origin: left bottom; transition-duration: 0.35s; }
+      .js .chat .me[data-rv] { transform-origin: right bottom; }
+      .js .chat [data-rv].in { transform: none; }
+
+      /* 제목 밑줄 — 펜으로 긋듯이 */
+      .js .hero h1 em::after { clip-path: inset(0 100% 0 0); transition: clip-path 0.7s cubic-bezier(0.6, 0, 0.2, 1) 0.75s; }
+      .js .hero.in h1 em::after { clip-path: inset(0 0 0 0); }
+
+      /* 전표 — 정가를 긋고, 깎인 값을 적고, 동그라미 */
+      .js .slip-row .was::after { transform: rotate(-7deg) scaleX(0); transform-origin: left center; transition: transform 0.32s ease-out; transition-delay: calc(1100ms + var(--i) * 420ms); }
+      .js .slip-area.in .slip-row .was::after { transform: rotate(-7deg) scaleX(1); }
+      .js .slip-row .now, .js .slip-row .cut { opacity: 0; transition: opacity 0.35s ease; transition-delay: calc(1380ms + var(--i) * 420ms); }
+      .js .slip-area.in .slip-row .now, .js .slip-area.in .slip-row .cut { opacity: 1; }
+      .js .slip-memo { opacity: 0; transform: rotate(-9deg) scale(0.7); transition: opacity 0.3s ease 2.7s, transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) 2.7s; }
+      .js .slip-area.in .slip-memo { opacity: 1; transform: rotate(-3deg) scale(1); }
+
+      /* 형광펜 */
+      .js .promise mark { background-repeat: no-repeat; background-size: 0% 100%; transition: background-size 0.9s ease 0.5s; }
+      .js .promise.in mark { background-size: 100% 100%; }
+
+      /* 가격 — 29,000 에서 0 으로 내려간 뒤 정가를 긋는다 */
+      .js .price-big .list::after { transform: rotate(-6deg) scaleX(0); transform-origin: left center; transition: transform 0.4s ease-out 1s; }
+      .js .price-big.in .list::after { transform: rotate(-6deg) scaleX(1); }
+      .js .price-pen[data-rv] { transform: rotate(-1.5deg) translateY(10px); }
+      .js .price-pen[data-rv].in { transform: rotate(-1.5deg); }
+
+      /* 누르는 곳 */
+      .btn { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(27, 24, 21, 0.14); }
+      .btn:active { transform: translateY(1px); box-shadow: none; }
+      .text-link, .top-link { transition: color 0.15s ease, border-color 0.15s ease; }
+      .text-link:hover, .top-link:hover { color: var(--green); border-color: var(--green); }
+      .faq details[open] p { animation: faq-open 0.3s ease; }
+      .slip { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+      .slip:hover { transform: rotate(-0.4deg) translateY(-4px); }
+
+      .js .dock { transform: translateY(110%); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s; }
+      .js .dock.in { transform: none; }
+    }
+
+    @keyframes faq-open {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: none; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
     }
   </style>
+  <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -465,9 +536,9 @@
   <main>
 
     <!-- 1. 첫 화면 -->
-    <section class="hero">
+    <section class="hero" data-rv-group>
       <div class="wrap">
-        <div>
+        <div data-stagger="110">
           <h1>지금 쓰시는 식자재,<br /><em>더 싸게</em> 구해드립니다.</h1>
           <p class="hero-lead">전표 사진 한 장이면 됩니다. 식자재 등록도, 가격 협상도 식식이가 대신 합니다. 거래처를 바꾸라고 하지 않습니다.</p>
           <div class="hero-actions">
@@ -477,26 +548,26 @@
           <p class="hero-fine">오픈 이벤트 기간 무료 · 카드 등록 없음</p>
         </div>
 
-        <div class="slip-area">
+        <div class="slip-area" data-rv data-rv-delay="350">
           <div class="slip">
             <div class="slip-head">
               <span class="slip-title">거래명세서</span>
               <span class="slip-date num">2026. 10. 14</span>
             </div>
             <div class="slip-cols"><span>품목</span><span>정가</span><span>식식이 회원가</span></div>
-            <div class="slip-row">
+            <div class="slip-row" style="--i:0">
               <span class="item">해내음 들기름 1.8L</span>
               <span class="was num">35,000</span>
               <span class="now num">29,000</span>
               <span class="cut pen">−6,000원</span>
             </div>
-            <div class="slip-row">
+            <div class="slip-row" style="--i:1">
               <span class="item">해내음 만능 비빔 양념장 2kg</span>
               <span class="was num">15,000</span>
               <span class="now num">12,500</span>
               <span class="cut pen">−2,500원</span>
             </div>
-            <div class="slip-row">
+            <div class="slip-row" style="--i:2">
               <span class="item">해내음 메주시골된장 14kg</span>
               <span class="was num">62,000</span>
               <span class="now num">58,500</span>
@@ -512,11 +583,11 @@
     <!-- 2. 사장님 말 -->
     <section class="band">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>식자재, 제값에<br />사고 있는 걸까요.</h2>
           <p class="lead">매달 가장 크게 나가는 돈인데, 비교해 볼 시간도 물어볼 곳도 없습니다.</p>
         </div>
-        <ul class="said">
+        <ul class="said" data-stagger="90">
           <li>식재료 값은 오르는데 메뉴 가격은 못 올린다</li>
           <li>어디서 사는 게 싼지 비교할 시간이 없다</li>
           <li>오래 거래한 곳이라 가격 얘기를 꺼내기 미안하다</li>
@@ -528,12 +599,12 @@
     <!-- 3. 세 가지 길 -->
     <section class="band">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>세 가지 길로<br />식자재 값을 낮춥니다.</h2>
           <p class="lead">있는 건 회원가로, 없는 건 찾아서, 납품 받는 건 견적으로.</p>
         </div>
         <div>
-          <ol class="ways">
+          <ol class="ways" data-stagger="140">
             <li>
               <div>
                 <h3>자주 쓰는 식자재를 회원가로</h3>
@@ -555,7 +626,7 @@
             </li>
           </ol>
 
-          <p class="promise">더 싸게 구할 수 없는 품목은<br /><mark>“지금 잘 사고 계십니다”</mark>라고 말씀드립니다.</p>
+          <p class="promise" data-rv>더 싸게 구할 수 없는 품목은<br /><mark>“지금 잘 사고 계십니다”</mark>라고 말씀드립니다.</p>
 
           <a href="https://restaurant.siksiki.com/browse" class="text-link">지금 살 수 있는 상품 보기 →</a>
         </div>
@@ -565,7 +636,7 @@
     <!-- 4. 카톡으로 -->
     <section class="band">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>카톡으로 전표 한 장.<br />그게 전부입니다.</h2>
           <p class="lead">지금 받는 전표(거래명세서)를 찍어 보내주세요. 식식이가 품목별 가격을 직접 살펴보고 답을 드립니다. 살펴보는 데 비용은 없습니다.</p>
           <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao btn-buy">카톡으로 전표 보내기</a>
@@ -573,6 +644,7 @@
         <div>
           <div class="chat" aria-label="카카오톡 대화 예시">
             <p class="chat-day">대화 예시</p>
+            <div data-stagger="520">
             <div class="chat-line me">
               <div class="bubble photo">
                 <div class="mini-slip"><b>거래명세서</b><i>들기름 1.8L</i><i>양념장 2kg</i><i>된장 14kg</i><i>식용유 18L</i></div>
@@ -582,6 +654,7 @@
             <p class="who">식식이</p>
             <div class="chat-line"><div class="bubble">네 사장님, 확인했습니다.<br />들기름·양념장·된장은 더 싸게 드릴 수 있습니다.</div></div>
             <div class="chat-line"><div class="bubble">식용유는 지금 잘 사고 계십니다. 그대로 쓰세요.</div></div>
+            </div>
           </div>
           <p class="chat-note">이해를 돕기 위한 예시 대화입니다.</p>
         </div>
@@ -590,7 +663,7 @@
 
     <!-- 5. 아무도 말 안 해주는 것 -->
     <section class="band dark">
-      <div class="wrap pair">
+      <div class="wrap pair" data-stagger="180">
         <div>
           <span class="kicker pen">아무도 말 안 해주는 것 ①</span>
           <h2>오래 거래할수록<br />왜 내가 을이 됐을까요.</h2>
@@ -607,11 +680,11 @@
     <!-- 6. 싸게 산 다음 -->
     <section class="band" style="border-top: none;">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>싸게 산 다음도<br />챙깁니다.</h2>
           <p class="lead">아낀 돈이 어디로 가는지 보입니다. 휴대폰 하나로 됩니다.</p>
         </div>
-        <ul class="after">
+        <ul class="after" data-stagger="90">
           <li><span>—</span>메뉴 한 그릇에 얼마 남는지 계산해 드립니다</li>
           <li><span>—</span>거래처별로 줄 돈과 이번 주 나갈 돈을 정리해 드립니다</li>
           <li><span>—</span>여러 거래처 발주를 한 곳에서 합니다</li>
@@ -622,18 +695,18 @@
     <!-- 7. 가격 -->
     <section class="band">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>지금은 무료입니다.</h2>
           <p class="lead">오픈 이벤트 기간에는 구독료를 받지 않습니다. 카드 등록도 없습니다. 구독회원 혜택은 그대로 드립니다.</p>
         </div>
         <div>
-          <div class="price-big">
-            <span class="zero num">0<small>원</small></span>
+          <div class="price-big" data-rv>
+            <span class="zero num"><span data-count-from="29000">0</span><small>원</small></span>
             <span class="list num">월 29,000원</span>
           </div>
-          <span class="price-pen pen">오픈 이벤트 기간 무료!</span>
+          <span class="price-pen pen" data-rv data-rv-delay="1250">오픈 이벤트 기간 무료!</span>
 
-          <ul class="gets">
+          <ul class="gets" data-stagger="60">
             <li>식자재 회원가 구매</li>
             <li>장바구니 구독회원 추가 할인</li>
             <li>초기 식자재 세팅 대행</li>
@@ -651,7 +724,7 @@
     <!-- 8. 묻는 말 -->
     <section class="band faq">
       <div class="wrap split">
-        <div>
+        <div data-rv>
           <h2>자주 묻는 질문</h2>
         </div>
         <div>
@@ -681,10 +754,10 @@
 
     <!-- 9. 맺음 -->
     <section class="band last">
-      <div class="wrap">
+      <div class="wrap" data-rv>
         <h2>사장님이 조금 더<br />편하셨으면 합니다.</h2>
         <p>현장을 직접 찾아다니며 만들었습니다. 전표 한 장부터 보내보세요.</p>
-        <div class="actions">
+        <div class="actions" data-stagger="100">
           <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go">무료로 시작하기</a>
           <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao">카톡으로 물어보기</a>
           <a href="tel:032-215-3207" class="btn btn-line">전화 032-215-3207</a>
@@ -710,6 +783,63 @@
     <a href="https://pf.kakao.com/_IMXeK/chat" target="_blank" rel="noopener noreferrer" class="btn btn-kakao">카톡 문의</a>
     <a href="https://restaurant.siksiki.com/?mode=signup" class="btn btn-go">무료로 시작하기</a>
   </div>
+
+  <script>
+    // 화면에 들어올 때 한 번 떠오르게 한다. 보이는 차례는 data-stagger 의 간격(ms)으로 정한다.
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      document.querySelectorAll('[data-stagger]').forEach(function (group) {
+        var step = Number(group.getAttribute('data-stagger')) || 100;
+        Array.prototype.forEach.call(group.children, function (el, i) {
+          el.setAttribute('data-rv', '');
+          el.style.setProperty('--d', i * step + 'ms');
+        });
+      });
+      document.querySelectorAll('[data-rv-delay]').forEach(function (el) {
+        el.style.setProperty('--d', el.getAttribute('data-rv-delay') + 'ms');
+      });
+
+      function countDown(el) {
+        var from = Number(el.getAttribute('data-count-from'));
+        if (reduce || !from) return;
+        var start = null;
+        var dur = 950;
+        el.textContent = from.toLocaleString('ko-KR');
+        function tick(t) {
+          if (start === null) start = t;
+          var p = Math.min(1, (t - start) / dur);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(from * (1 - eased)).toLocaleString('ko-KR');
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function show(el) {
+        el.classList.add('in');
+        var counter = el.querySelector('[data-count-from]');
+        if (counter) countDown(counter);
+      }
+
+      var targets = document.querySelectorAll('[data-rv], [data-rv-group]');
+      if (!('IntersectionObserver' in window)) {
+        Array.prototype.forEach.call(targets, show);
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            show(entry.target);
+            io.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+        Array.prototype.forEach.call(targets, function (el) { io.observe(el); });
+      }
+
+      var dock = document.querySelector('.dock');
+      if (dock) requestAnimationFrame(function () { dock.classList.add('in'); });
+    })();
+  </script>
 
 </body>
 </html>

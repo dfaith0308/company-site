@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /os/
+Disallow: /ads/
+Disallow: /design/
+Disallow: /jeongmoo/
+Disallow: /shop/
+Disallow: /dashboard/
+
+Sitemap: https://www.siksiki.com/sitemap.xml
